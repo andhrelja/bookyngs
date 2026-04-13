@@ -4,13 +4,16 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_USER: bookyngs
+      POSTGRES_USER: bookings
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: bookyngs
+      POSTGRES_DB: bookings
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init-databases.sh:/docker-entrypoint-initdb.d/init-databases.sh
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U bookyngs"]
+      test: ["CMD-SHELL", "pg_isready -U bookings"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -32,9 +35,9 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      DSN: postgres://bookyngs:${POSTGRES_PASSWORD}@postgres:5432/bookyngs?sslmode=disable&max_conns=20&max_idle_conns=4
+      DSN: postgres://bookings:${POSTGRES_PASSWORD}@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
     volumes:
-      - ./kratos:/etc/config/kratos
+      - ./ory/kratos:/etc/config/kratos
     command: migrate sql -e --yes -c /etc/config/kratos/kratos.yml
     restart: on-failure
 
@@ -44,13 +47,13 @@ services:
       kratos-migrate:
         condition: service_completed_successfully
     environment:
-      DSN: postgres://bookyngs:${POSTGRES_PASSWORD}@postgres:5432/bookyngs?sslmode=disable&max_conns=20&max_idle_conns=4
+      DSN: postgres://bookings:${POSTGRES_PASSWORD}@postgres:5432/kratos?sslmode=disable&max_conns=20&max_idle_conns=4
       LOG_LEVEL: info
     ports:
       - "4433:4433"
       - "4434:4434"
     volumes:
-      - ./kratos:/etc/config/kratos
+      - ./ory/kratos:/etc/config/kratos
     command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
     restart: unless-stopped
 
@@ -62,7 +65,7 @@ services:
       - "4455:4455"
       - "4456:4456"
     volumes:
-      - ./oathkeeper:/etc/config/oathkeeper
+      - ./ory/oathkeeper:/etc/config/oathkeeper
     command: serve proxy -c /etc/config/oathkeeper/oathkeeper.yml
     restart: unless-stopped
 
@@ -74,7 +77,7 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql+asyncpg://bookyngs:${POSTGRES_PASSWORD}@postgres:5432/bookyngs
+      DATABASE_URL: postgresql+asyncpg://bookings:${POSTGRES_PASSWORD}@postgres:5432/bookings
       REDIS_URL: redis://redis:6379/0
       KRATOS_PUBLIC_URL: http://kratos:4433
       KRATOS_ADMIN_URL: http://kratos:4434

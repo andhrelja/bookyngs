@@ -1,10 +1,10 @@
 /**
- * Bookyngs embeddable widget entry point.
+ * Bookings embeddable widget entry point.
  *
  * Embed on any page with:
  *
- *   <div data-bookyngs data-tenant="your-slug" data-module="webshop"></div>
- *   <script src="https://cdn.bookyngs.hr/widget.iife.js" defer></script>
+ *   <div data-bookings data-tenant="your-slug" data-module="webshop"></div>
+ *   <script src="https://cdn.bookings.hr/widget.iife.js" defer></script>
  *
  * Attributes:
  *   data-tenant   — tenant slug (required)
@@ -15,14 +15,14 @@
 import { mount } from "./mount";
 
 function init(): void {
-  const containers = document.querySelectorAll<HTMLElement>("[data-bookyngs]");
+  const containers = document.querySelectorAll<HTMLElement>("[data-bookings]");
   containers.forEach((el) => {
     const tenant = el.dataset.tenant;
     const mod = el.dataset.module as "webshop" | "booking" | "loyalty" | undefined;
     const locale = (el.dataset.locale ?? "hr") as "hr" | "en";
 
     if (!tenant || !mod) {
-      console.warn("[bookyngs] Element missing data-tenant or data-module.", el);
+      console.warn("[bookings] Element missing data-tenant or data-module.", el);
       return;
     }
 

@@ -5,8 +5,8 @@ export interface WidgetConfig {
 }
 
 const API_BASE =
-  (typeof window !== "undefined" && (window as Window & { BOOKYNGS_API?: string }).BOOKYNGS_API) ||
-  "https://api.bookyngs.hr";
+  (typeof window !== "undefined" && (window as Window & { BOOKINGS_API?: string }).BOOKINGS_API) ||
+  "https://api.bookings.hr";
 
 export function mount(el: HTMLElement, config: WidgetConfig): void {
   el.innerHTML = `<div style="font-family:sans-serif;padding:1rem;color:#6b7280;font-size:0.875rem">
@@ -19,6 +19,6 @@ export function mount(el: HTMLElement, config: WidgetConfig): void {
       el.innerHTML = `<p style="color:#ef4444;font-size:0.875rem;padding:1rem">
         ${config.locale === "hr" ? "Greška pri učitavanju." : "Failed to load."}
       </p>`;
-      console.error("[bookyngs]", err);
+      console.error("[bookings]", err);
     });
 }

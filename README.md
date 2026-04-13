@@ -1,4 +1,4 @@
-# bookyngs
+# bookings
 
 Centralizirana multi-tenant SaaS platforma za hrvatska mala i srednja poduzeća.
 
@@ -11,7 +11,7 @@ Centralizirana multi-tenant SaaS platforma za hrvatska mala i srednja poduzeća.
 ## Arhitektura
 
 ```
-bookyngs/
+bookings/
 ├── backend/       # FastAPI (Python 3.12)
 ├── frontend/      # Next.js 15 (TypeScript) — admin dashboard
 ├── widget/        # Embeddable JS widget (Vite + TypeScript)
@@ -66,8 +66,8 @@ npm run build   # generira dist/widget.iife.js
 Ugradnja na stranicu tenanta:
 
 ```html
-<div data-bookyngs data-tenant="moj-slug" data-module="webshop"></div>
-<script src="https://cdn.bookyngs.hr/widget.iife.js" defer></script>
+<div data-bookings data-tenant="moj-slug" data-module="webshop"></div>
+<script src="https://cdn.bookings.hr/widget.iife.js" defer></script>
 ```
 
 ## Usklađenost

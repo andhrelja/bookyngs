@@ -37,7 +37,7 @@ export async function render(el: HTMLElement, config: WidgetConfig, apiBase: str
               ${priceLabel ? `<p style="font-weight:500;margin:0.5rem 0">${priceLabel}</p>` : ""}
               <button
                 data-resource-id="${r.id}"
-                onclick="console.log('[bookyngs] book resource', '${r.id}')"
+                onclick="console.log('[bookings] book resource', '${r.id}')"
                 style="width:100%;background:#2563eb;color:#fff;border:none;padding:0.5rem;border-radius:0.5rem;cursor:pointer;font-size:0.875rem;margin-top:0.5rem"
               >
                 ${config.locale === "hr" ? "Rezerviraj" : "Book now"}

@@ -31,4 +31,9 @@ async def get_session(request: Request) -> dict:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Sesija nije valjana.")
 
     data = resp.json()
-    return {"id": data["identity"]["id"], "traits": data["identity"].get("traits", {})}
+    identity = data["identity"]
+    return {
+        "id": identity["id"],
+        "traits": identity.get("traits", {}),
+        "metadata_public": identity.get("metadata_public") or {},
+    }

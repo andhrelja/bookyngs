@@ -18,7 +18,7 @@ export async function render(el: HTMLElement, config: WidgetConfig, _apiBase: st
         <button
           onclick="(function(){
             var email = document.getElementById('bky-loyalty-email').value;
-            console.log('[bookyngs] check loyalty card', email);
+            console.log('[bookings] check loyalty card', email);
           })()"
           style="width:100%;background:#2563eb;color:#fff;border:none;padding:0.625rem;border-radius:0.5rem;cursor:pointer;font-size:0.875rem;margin-top:0.75rem"
         >

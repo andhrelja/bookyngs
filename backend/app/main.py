@@ -2,10 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import booking, loyalty, tenants, webshop
+from app.routers import booking, hooks, loyalty, tenants, webshop
 
 app = FastAPI(
-    title="Bookyngs API",
+    title="Bookings API",
     version="0.1.0",
     docs_url="/api/docs" if settings.environment == "development" else None,
     redoc_url=None,
@@ -19,6 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(hooks.router, prefix="/api/hooks", tags=["hooks"])
 app.include_router(tenants.router, prefix="/api/tenants", tags=["tenants"])
 app.include_router(webshop.router, prefix="/api/webshop", tags=["webshop"])
 app.include_router(booking.router, prefix="/api/booking", tags=["booking"])

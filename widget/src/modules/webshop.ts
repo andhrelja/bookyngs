@@ -34,7 +34,7 @@ export async function render(el: HTMLElement, config: WidgetConfig, apiBase: str
               <p style="font-weight:500;margin:0.5rem 0 0.75rem">${p.price} EUR</p>
               <button
                 data-product-id="${p.id}"
-                onclick="console.log('[bookyngs] add to cart', '${p.id}')"
+                onclick="console.log('[bookings] add to cart', '${p.id}')"
                 style="width:100%;background:#2563eb;color:#fff;border:none;padding:0.5rem;border-radius:0.5rem;cursor:pointer;font-size:0.875rem"
               >
                 ${config.locale === "hr" ? "Dodaj u košaricu" : "Add to cart"}

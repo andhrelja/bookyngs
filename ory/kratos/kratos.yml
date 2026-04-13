@@ -60,6 +60,14 @@ selfservice:
       after:
         password:
           hooks:
+            - hook: web_hook
+              config:
+                url: http://backend:8000/api/hooks/registration
+                method: POST
+                body: file:///etc/config/kratos/registration-hook.jsonnet
+                response:
+                  ignore: false
+                  parse: true
             - hook: session
 
 log:
@@ -71,7 +79,7 @@ secrets:
   cookie:
     - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
   cipher:
-    - 32-LONG-SECRET-NOT-SECURE-AT-ALL-1
+    - 32-LONG-SECRET-NOT-SECURE-AT-ALL
 
 ciphers:
   algorithm: xchacha20-poly1305
