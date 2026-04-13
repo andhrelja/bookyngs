@@ -1,0 +1,57 @@
+# Health check — public, no auth required
+- id: api-health
+  match:
+    url: http://oathkeeper:4455/api/health
+    methods:
+      - GET
+  authenticators:
+    - handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
+
+# Widget public reads — products and resources are publicly readable per tenant slug
+# These are served without a session so end-users on embed sites can load content
+- id: widget-webshop-products-public
+  match:
+    url: "http://oathkeeper:4455/api/webshop/products<**>"
+    methods:
+      - GET
+  authenticators:
+    - handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
+
+- id: widget-booking-resources-public
+  match:
+    url: "http://oathkeeper:4455/api/booking/resources<**>"
+    methods:
+      - GET
+  authenticators:
+    - handler: anonymous
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: noop
+
+# All other API routes require an authenticated Kratos session.
+# Oathkeeper injects X-Kratos-Authenticated-Identity-Id so the backend
+# can resolve the tenant without touching Kratos again.
+- id: api-protected
+  match:
+    url: "http://oathkeeper:4455/api/<**>"
+    methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+  authenticators:
+    - handler: cookie_session
+  authorizer:
+    handler: allow
+  mutators:
+    - handler: header

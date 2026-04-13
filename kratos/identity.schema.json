@@ -1,0 +1,46 @@
+{
+  "$id": "https://bookyngs.hr/schemas/identity.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Korisnik",
+  "type": "object",
+  "properties": {
+    "traits": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "title": "E-mail adresa",
+          "ory.sh/kratos": {
+            "credentials": {
+              "password": {
+                "identifier": true
+              }
+            },
+            "verification": {
+              "via": "email"
+            },
+            "recovery": {
+              "via": "email"
+            }
+          }
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "first": {
+              "title": "Ime",
+              "type": "string"
+            },
+            "last": {
+              "title": "Prezime",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": ["email"],
+      "additionalProperties": false
+    }
+  }
+}
